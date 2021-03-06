@@ -1,0 +1,12 @@
+aiohttp~=3.6.2
+nb-cli
+nonebot2
+nonebot-adapter-cqhttp
+nonebot-adapter-mirai
+nonebot_plugin_test
+nonebot_plugin_apscheduler
+httpx
+peewee~=3.14.0
+
+APScheduler~=3.7.0
+pydantic~=1.8.1
