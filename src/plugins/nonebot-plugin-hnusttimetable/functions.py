@@ -73,12 +73,20 @@ def f_generate_scheduler(timetable: List[Dict]) -> List[Tuple[datetime, str]]:
         )
         schedulers.append((note_datetime3, note_message3))
 
+        note_datetime4 = end_time
+        note_message4 = '''下课了， 休息一下吧！（这句话是不是会显得很烦啊？）'''.format(
+            time=str(start_time), location=each['location'],
+            course_name=each['courseName'],
+            remain_time='5分钟',
+        )
+        schedulers.append((note_datetime4, note_message4))
+
     return schedulers
 
 
 async def f_bind(qq_id: int, student_id: int, password: str) -> Tuple:
+    hnust = Hnust()
     try:
-        hnust = Hnust()
         msg = await hnust.login(student_id, password)
         await hnust.close()
         student = StudentTimetable.select().where(StudentTimetable.qq_id == qq_id)
@@ -89,10 +97,11 @@ async def f_bind(qq_id: int, student_id: int, password: str) -> Tuple:
         student.qq_id = qq_id
         student.student_id = student_id
         student.password = password
-        student.band =True
+        student.band = True
         student.save()
         return True, msg
     except RuntimeError as e:
+        await hnust.close()
         return False, str(e.args[0])
 
 

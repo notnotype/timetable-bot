@@ -21,9 +21,9 @@ class Hnust:
 
     def __init__(self):
         self.session = aiohttp.ClientSession(headers={
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.'
-                          '0.705.81'
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                          'AppleWebKit/537.36 (KHTML, like Gecko) Chro'
+                          'me/89.0.4389.72 Safari/537.36 Edg/89.0.774.45'
         })
 
     async def login(self, student_id: int, pwd: str):
@@ -40,8 +40,8 @@ class Hnust:
             self.session._default_headers['token'] = self.token
             return resp_json['Msg']
         elif resp_json['code'] == '0':
-            self.token = pwd
-            url = urljoin(HNUST_BASE_URL, 'Get_sjkbms')
+            self.session._default_headers['token'] = self.token = pwd
+            url = urljoin(HNUST_BASE_URL, 'teachingWeek')
             r = await self.session.post(url)
             resp_json = await r.json()
             if resp_json['code'] == '1':

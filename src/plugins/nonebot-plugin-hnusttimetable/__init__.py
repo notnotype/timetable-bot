@@ -58,7 +58,7 @@ async def _(bot: Bot, event: Event, state: T_State):
 
 
 @bind_command.got('student_id', prompt='请 input 您的 student_id')
-@bind_command.got('password', prompt='请 input 您的 password')
+@bind_command.got('password', prompt='请 input 您的 password 或者 token')
 async def bind(bot: Bot, event: Event, state: T_State, matcher: Matcher):
     qq_id = int(event.get_user_id())
     student_id = state['student_id']
@@ -91,7 +91,7 @@ async def _(bot: Bot, event: Event, state: T_State):
         except ValueError:
             await bind_command.reject('您输入的不是数字呢！请重新输入')
     else:
-        raise RuntimeError(f'at: bind_command.args_parser # {state["_current_key"]}')
+        raise RuntimeError(f'Exception at: bind_command.args_parser # {state["_current_key"]}')
 
 
 @register_scheduler_command.handle()
